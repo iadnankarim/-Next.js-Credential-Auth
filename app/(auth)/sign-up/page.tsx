@@ -26,6 +26,8 @@ import { useForm } from 'react-hook-form';
 
 import { z } from 'zod';
 import { formSchema } from '@/lib/auth-schema';
+import { authClient } from '@/lib/auth-client';
+import { toast } from 'sonner';
 
 const SignUp = () => {
   // 1. Define your form.
@@ -39,7 +41,32 @@ const SignUp = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { name, email, password } = values;
+
+    const { data, error } = await authClient.signUp.email(
+      {
+        name, // required
+        email, // required
+        password, // required
+        // image: 'https://example.com/image.png',
+        callbackURL: '/sign-in',
+      },
+      {
+        onRequest: (ctx) => {
+          // show loading
+          toast.success('please wait');
+        },
+        onSuccess: (ctx) => {
+          // redirect to the dashboard
+          form.reset();
+        },
+        onError: (ctx) => {
+          // alert();
+          toast.error(ctx.error.message);
+        },
+      }
+    );
     console.log(values);
   }
 
