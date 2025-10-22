@@ -1,4 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Credentials Auth Made Easy with Better Auth
+
+A modern, secure authentication system built with Next.js 16 and Better Auth. This project demonstrates how to implement credential-based authentication with a clean, user-friendly interface.
+
+## Features
+
+- 🔐 **Secure Authentication** - Built with Better Auth for robust security
+- 🎨 **Modern UI** - Clean, responsive design with Tailwind CSS
+- ⚡ **Next.js 16** - Latest Next.js features with App Router
+- 🛡️ **Type Safety** - Full TypeScript support
+- 📱 **Responsive Design** - Works seamlessly on all devices
+- 🚀 **Easy Setup** - Simple configuration and deployment
+
+## Tech Stack
+
+- **Framework**: Next.js 16 with App Router
+- **Authentication**: Better Auth
+- **Styling**: Tailwind CSS
+- **UI Components**: Custom components with Radix UI
+- **Icons**: Lucide React
+- **Language**: TypeScript
 
 ## Getting Started
 
