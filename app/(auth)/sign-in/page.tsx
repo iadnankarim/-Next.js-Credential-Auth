@@ -46,6 +46,8 @@ const SignIn = () => {
   async function onSubmit(values: z.infer<typeof signInFormSchema>) {
     const { email, password } = values;
 
+    console.log('Attempting login with:', { email, password: '***' });
+
     const { data, error } = await authClient.signIn.email(
       {
         email, // required
@@ -60,16 +62,18 @@ const SignIn = () => {
         },
         onSuccess: (ctx) => {
           // redirect to the dashboard
+          console.log('Login successful:', ctx);
           form.reset();
           router.push('/dashboard');
         },
         onError: (ctx) => {
           // alert();
+          console.error('Login error:', ctx.error);
           toast.error(ctx.error.message);
         },
       }
     );
-    console.log(values);
+    console.log('Login result:', { data, error });
   }
 
   return (

@@ -66,7 +66,7 @@ const SignUp = () => {
         },
         onError: (ctx) => {
           // alert();
-          alert(ctx.error.message);
+          toast.error(ctx.error.message);
         },
       }
     );
