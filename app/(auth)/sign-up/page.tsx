@@ -28,8 +28,10 @@ import { z } from 'zod';
 import { formSchema } from '@/lib/auth-schema';
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const SignUp = () => {
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,10 +62,11 @@ const SignUp = () => {
         onSuccess: (ctx) => {
           // redirect to the dashboard
           form.reset();
+          router.push('/sign-in');
         },
         onError: (ctx) => {
           // alert();
-          toast.error(ctx.error.message);
+          alert(ctx.error.message);
         },
       }
     );

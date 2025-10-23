@@ -26,8 +26,13 @@ import { useForm } from 'react-hook-form';
 
 import { z } from 'zod';
 import { signInFormSchema } from '@/lib/auth-schema';
+import { authClient } from '@/lib/auth-client';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const SignIn = () => {
+  const router = useRouter();
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
@@ -38,7 +43,32 @@ const SignIn = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof signInFormSchema>) {
+  async function onSubmit(values: z.infer<typeof signInFormSchema>) {
+    const { email, password } = values;
+
+    const { data, error } = await authClient.signIn.email(
+      {
+        email, // required
+        password, // required
+        // image: 'https://example.com/image.png',
+        callbackURL: '/dashboard',
+      },
+      {
+        onRequest: (ctx) => {
+          // show loading
+          toast.success('please wait');
+        },
+        onSuccess: (ctx) => {
+          // redirect to the dashboard
+          form.reset();
+          router.push('/dashboard');
+        },
+        onError: (ctx) => {
+          // alert();
+          toast.error(ctx.error.message);
+        },
+      }
+    );
     console.log(values);
   }
 
